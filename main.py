@@ -2,8 +2,9 @@
 
 from time import time
 from recursos.funciones import *
-opcion = -1
-while opcion != 3:
+import sys
+
+while True:
     print"Menú"
     print"Escoja una opción:"
     print"1.Encriptar"
@@ -21,7 +22,7 @@ while opcion != 3:
         print"Texto cifrado:", encriptar(textoPlano, matriz)
         tiempo_final = time()
         tiempo_ejecucion = (tiempo_final - tiempo_inicial) *1000
-        print tiempo_ejecucion, "milisegundos"
+        print "tiempo ejecución:", tiempo_ejecucion, "milisegundos"
     if opcion == '2':
         print "Ingrese clave desencriptación"
         claveDesencriptacion = raw_input()
@@ -29,3 +30,5 @@ while opcion != 3:
         #textoCifrado = raw_input()
         matriz = matrizClave(claveDesencriptacion)
         print "Texto plano:", desencriptar(textoCifrado, matriz)
+    if opcion == '3':
+        sys.exit(0)

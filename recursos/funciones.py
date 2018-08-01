@@ -2,6 +2,7 @@
 
 from timeit import timeit
 def numeroLetra(unicode):
+    #Función para convertir un numero a una letra
     #tamaño del alfabeto: 0-300, el resto fue cambiado para poder imprimirlo
     if unicode <= 31 and unicode != 10 or unicode >= 127 and unicode <= 160:
         unicode = 400 + unicode
@@ -10,6 +11,7 @@ def numeroLetra(unicode):
 
 
 def letraNumero(letra):
+    #Función para convertir una letra en un numero
     #tamaño del alfabeto: 0-300, el resto fue cambiado para poder imprimirlo
     unicode = ord(letra)
     if unicode >= 400:
@@ -25,10 +27,11 @@ def sumaLetraNumero(texto):
 
 
 def matrizClave(clave):
+    #Función que genera la matriz de claves
     matriz = []
     for i in range(3):
         matriz.append([0]*3)
-
+    #Se asigna un valor para elemento de la matriz
     matriz[0][0] = len(clave) % 300
     matriz[0][1] = sumaLetraNumero(clave) % 300
     matriz[0][2] = (len(clave) + sumaLetraNumero(clave)) % 300
@@ -43,7 +46,7 @@ def matrizClave(clave):
 
 
 def encriptar(textoPlano, matriz):
-
+    #Funcion de encriptación
     columnaActual = 0
     filaActual = 0
     acumulador = 0
@@ -55,15 +58,13 @@ def encriptar(textoPlano, matriz):
             filaActual = filaActual + 1
             filaActual = filaActual % 3
             for i in range(3):
-                matrizClave[filaActual][i] = matrizClave[filaActual][i] + acumulador
+                matrizClave[filaActual][i] = matrizClave[filaActual][i] + acumulador #Con esto la salida cambia según la entrada
                 matrizClave[filaActual][i] = matrizClave[filaActual][i] % 300
             acumulador = 0
             columnaActual=0
         letra = textoPlano[contador]
         unicode = letraNumero(letra) + matrizClave[filaActual][columnaActual]
-        #print "uni", matrizClave[filaActual][columnaActual]
         unicode = unicode % 300
-        #print "uni", unicode
 
         textoCifrado = textoCifrado + numeroLetra(unicode)
         acumulador = acumulador + unicode
@@ -73,31 +74,29 @@ def encriptar(textoPlano, matriz):
 
 
 def desencriptar(textoCifrado, matriz):
+    # Funcion de desencriptación
     columnaActual = 0
     filaActual = 0
     acumulador = 0
     textoDescifrado = ""
     letra = ""
     matrizClave = matriz
-    #print "textocifrado:", len(textoCifrado)
     for contador in range(len(textoCifrado)):
 
         if columnaActual == 3:
             filaActual = filaActual + 1
             filaActual = filaActual % 3
             for i in range(0, 3, 1):
-                matrizClave[filaActual][i] = matrizClave[filaActual][i] + acumulador
+                matrizClave[filaActual][i] = matrizClave[filaActual][i] + acumulador #Con esto la salida cambia según la entrada
                 matrizClave[filaActual][i] = matrizClave[filaActual][i] % 300
             acumulador = 0
             columnaActual = 0
         letra = textoCifrado[contador]
-        #print "letra", letra
         unicode = letraNumero(letra) - matrizClave[filaActual][columnaActual]
 
         if unicode < 0:
             unicode = unicode + 300
         unicode = unicode % 300
-        #print "unicode", unicode
         textoDescifrado = textoDescifrado + numeroLetra(unicode)
         acumulador = acumulador + letraNumero(letra)
         columnaActual = columnaActual + 1

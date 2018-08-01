@@ -37,7 +37,7 @@ def matrizClave(clave):
     matriz[1][2] = (len(clave) * 428) % 300
     matriz[2][0] = (sumaLetraNumero(clave) * 256) % 300
     matriz[2][1] = (sumaLetraNumero(clave) + 26) % 300
-    matriz[2][2] = abs(sumaLetraNumero(clave) + 528) & 300
+    matriz[2][2] = abs(sumaLetraNumero(clave) + 528) % 300
 
     return matriz
 

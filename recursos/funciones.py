@@ -103,3 +103,22 @@ def desencriptar(textoCifrado, matriz):
 
 
     return textoDescifrado
+
+
+def mac(textoCifrado, claveMac):
+
+    acumPlano = ""
+    mac = ""
+    for i in range(len(textoCifrado)):
+        acumPlano = acumPlano + textoCifrado[(i+2)%len(textoCifrado)] + claveMac[i%len(claveMac)]
+
+    #print acumPlano
+
+    matriz = matrizClave(acumPlano)
+
+    for i in range(0,3):
+        for j in range(0,3):
+            mac = mac + numeroLetra(matriz[i][j])
+
+
+    return mac
